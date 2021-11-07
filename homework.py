@@ -72,9 +72,9 @@ class Running(Training):
         super().__init__(action, duration, weight)
 
     def get_spent_calories(self) -> float:
-        run = ((self.COEFF_CALORIE_1 * self.get_mean_speed() -
-                self.COEFF_CALORIE_2) * self.weight / self.M_IN_KM *
-               (self.duration * 60))
+        run = ((self.COEFF_CALORIE_1 * self.get_mean_speed()
+                - self.COEFF_CALORIE_2) * self.weight / self.M_IN_KM
+               * (self.duration * 60))
         return run
 
 
@@ -88,10 +88,10 @@ class SportsWalking(Training):
         self.height = height
 
     def get_spent_calories(self) -> float:
-        sports_walking = ((self.COEFF_CALORIE_1 * self.weight +
-                           (self.get_mean_speed()**2 // self.height) *
-                          self.COEFF_CALORIE_2 * self.weight) *
-                          self.duration * 60)
+        sports_walking = ((self.COEFF_CALORIE_1 * self.weight
+                           + (self.get_mean_speed()**2 // self.height)
+                           * self.COEFF_CALORIE_2 * self.weight)
+                          * self.duration * 60)
         return sports_walking
 
 
@@ -108,16 +108,16 @@ class Swimming(Training):
         self.COEFF_CALORIE_2 = 2
 
     def get_mean_speed(self) -> float:
-        mean_spd_swim = (self.length_pool *
-                         self.count_pool /
-                         self.M_IN_KM / self.duration)
+        mean_spd_swim = (self.length_pool
+                         * self.count_pool
+                         / self.M_IN_KM / self.duration)
         return mean_spd_swim
 
     def get_spent_calories(self) -> float:
-        swim_calories = ((self.get_mean_speed() +
-                          self.COEFF_CALORIE_1) *
-                         self.COEFF_CALORIE_2 *
-                         self.weight)
+        swim_calories = ((self.get_mean_speed()
+                          + self.COEFF_CALORIE_1)
+                         * self.COEFF_CALORIE_2
+                         * self.weight)
         return swim_calories
 
 
