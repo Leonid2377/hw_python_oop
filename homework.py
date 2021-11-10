@@ -117,7 +117,8 @@ def read_package(workout_type: str, data: list) -> Training:
 
     if len(data) != len(fields(training_unpacking)):
         raise ValueError(ERROR_TWO.format(type_training=workout_type,
-                                          expected_value=len(data), result_value=len(fields(training_unpacking))))
+                                          expected_value=len(data),
+                                          result_value=len(fields(training_unpacking))))
     return training_unpacking(*data)
 
 
