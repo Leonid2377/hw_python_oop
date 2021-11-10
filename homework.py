@@ -103,17 +103,22 @@ TRAININGS = {'SWM': Swimming,
              'RUN': Running,
              'WLK': SportsWalking}
 
-ERRORS = 'Не верные входные данные {err}.'
+ERROR_ONE = 'Выбран не верный тип тренировки: {type_training}.'
+ERROR_TWO = ('Для типа тренировки {type_training},'
+             ' ожидаемое кол-во значений: {expected_value}, полученное: {result_value}')
 
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    unpacking = TRAININGS[workout_type]
     if workout_type not in TRAININGS:
-        raise ValueError(ERRORS.format(err=workout_type))
-    if len(data) != len(fields(unpacking)):
-        raise TypeError(ERRORS.format(err=data))
-    return unpacking(*data)
+        raise ValueError(ERROR_ONE.format(type_training=workout_type))
+
+    training_unpacking = TRAININGS[workout_type]
+
+    if len(data) != len(fields(training_unpacking)):
+        raise ValueError(ERROR_TWO.format(type_training=workout_type,
+                                          expected_value=len(data), result_value=len(fields(training_unpacking))))
+    return training_unpacking(*data)
 
 
 def main(training: Training) -> None:
