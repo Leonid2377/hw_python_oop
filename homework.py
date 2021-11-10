@@ -105,7 +105,8 @@ TRAININGS = {'SWM': Swimming,
 
 ERROR_ONE = 'Выбран не верный тип тренировки: {type_training}.'
 ERROR_TWO = ('Для типа тренировки {type_training},'
-             ' ожидаемое кол-во значений: {expected_value}, полученное: {result_value}')
+             ' ожидаемое кол-во значений: {expected_value},'
+             ' полученное: {result_value}')
 
 
 def read_package(workout_type: str, data: list) -> Training:
@@ -118,7 +119,9 @@ def read_package(workout_type: str, data: list) -> Training:
     if len(data) != len(fields(training_unpacking)):
         raise ValueError(ERROR_TWO.format(type_training=workout_type,
                                           expected_value=len(data),
-                                          result_value=len(fields(training_unpacking))))
+                                          result_value=len(
+                                              fields(
+                                                  training_unpacking))))
     return training_unpacking(*data)
 
 
