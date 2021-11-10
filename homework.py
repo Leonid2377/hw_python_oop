@@ -82,8 +82,7 @@ class SportsWalking(Training):
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP = 1.38
-    SPEED_1 = 1.1
-    TERM_SPEED = 1.1
+    SUMMAND_SPEED = 1.1
     MULTIPLIER_SPEED = 2
     length_pool: float
     count_pool: int
@@ -95,7 +94,7 @@ class Swimming(Training):
 
     def get_spent_calories(self) -> float:
         return ((self.get_mean_speed()
-                 + self.TERM_SPEED)
+                 + self.SUMMAND_SPEED)
                 * self.MULTIPLIER_SPEED
                 * self.weight)
 
@@ -104,15 +103,17 @@ TRAININGS = {'SWM': Swimming,
              'RUN': Running,
              'WLK': SportsWalking}
 
+ERRORS = 'Не верные входные данные {err}.'
+
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-
+    unpacking = TRAININGS[workout_type]
     if workout_type not in TRAININGS:
-        raise KeyError('неверный тип тренировки')
-    elif len(data) != len(fields(TRAININGS.get(workout_type))):
-        raise TypeError('дано неверное кол-во аргументов')
-    return TRAININGS[workout_type](*data)
+        raise ValueError(ERRORS.format(err=workout_type))
+    if len(data) != len(fields(unpacking)):
+        raise TypeError(ERRORS.format(err=data))
+    return unpacking(*data)
 
 
 def main(training: Training) -> None:
